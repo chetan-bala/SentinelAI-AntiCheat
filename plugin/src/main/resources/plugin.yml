@@ -1,0 +1,18 @@
+name: SentinelAI
+version: 1.0.0
+main: com.sentinelai.anticheat.SentinelAI
+api-version: 1.20
+description: AI-powered anti-cheat system with web dashboard
+author: SentinelAI Team
+website: https://github.com/YOUR_USERNAME/SentinelAI-AntiCheat
+
+commands:
+  sentinel:
+    description: SentinelAI admin commands
+    usage: /sentinel <reload|status|version>
+    permission: sentinelai.admin
+
+permissions:
+  sentinelai.admin:
+    description: Access to SentinelAI commands
+    default: op

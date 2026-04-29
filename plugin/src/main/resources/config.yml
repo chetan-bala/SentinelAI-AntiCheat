@@ -1,0 +1,50 @@
+# SentinelAI AntiCheat Configuration
+
+# API Settings
+api:
+  enabled: true
+  url: "https://your-backend.onrender.com"
+  key: "sentinel-free-key-12345"
+
+# AI Settings
+ai:
+  enabled: true
+  model: "anomaly-detection"
+  learning-rate: 0.01
+
+# Discord Alerts
+discord:
+  enabled: false
+  webhook: "https://discord.com/api/webhooks/your-webhook-url"
+
+# Detection Checks
+checks:
+  speed:
+    enabled: true
+    max-vl: 10
+    threshold: 0.35
+  fly:
+    enabled: true
+    max-vl: 8
+    threshold: 0.5
+  killaura:
+    enabled: true
+    max-vl: 12
+    threshold: 30
+  reach:
+    enabled: true
+    max-vl: 10
+    threshold: 3.5
+  noslow:
+    enabled: true
+    max-vl: 10
+    threshold: 0.15
+  autoclicker:
+    enabled: true
+    max-vl: 15
+    threshold: 20
+
+# Clip Settings
+clip:
+  duration: 30
+  max-records: 600
