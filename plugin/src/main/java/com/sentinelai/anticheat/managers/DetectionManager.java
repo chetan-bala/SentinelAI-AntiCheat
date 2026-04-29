@@ -2,7 +2,6 @@ package com.sentinelai.anticheat.managers;
 
 import com.sentinelai.anticheat.SentinelAI;
 import com.sentinelai.anticheat.data.PlayerData;
-import com.sentinelai.anticheat.managers.ClipManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
