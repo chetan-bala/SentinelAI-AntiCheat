@@ -1,5 +1,6 @@
 package com.sentinelai.anticheat;
 
+import com.sentinelai.anticheat.data.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
