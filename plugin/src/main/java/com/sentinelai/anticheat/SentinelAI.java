@@ -13,10 +13,10 @@ public class SentinelAI extends JavaPlugin implements Listener {
     public void onEnable() {
         Bukkit.getPluginManager().registerEvents(this, this);
         
-        getLogger().info("========== SentinelAI ==========");
+        getLogger().info("========== SentinelAI AntiCheat ==========");
         getLogger().info("Version: 1.0.0");
         getLogger().info("Status: ENABLED");
-        getLogger().info("=============================");
+        getLogger().info("==========================================");
     }
 
     @EventHandler
