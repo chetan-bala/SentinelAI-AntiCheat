@@ -1,0 +1,31 @@
+[--rev, 1.21.4]
+Loading BuildTools version: git-BuildTools-4ebb05d-200 (#200)
+Java Version: Java 26
+Current Path: C:\SentinelAI-AntiCheat
+*** Using downloaded git PortableGit-2.45.2-64-bit\PortableGit ***
+*** Please note that this is a beta feature, so if it does not work please also try a manual install of git from https://git-for-windows.github.io/ ***
+git version 2.45.2.windows.1
+java version "26.0.1" 2026-04-21
+Java(TM) SE Runtime Environment (build 26.0.1+8-34)
+Java HotSpot(TM) 64-Bit Server VM (build 26.0.1+8-34, mixed mode, sharing)
+Attempting to build version: '1.21.4' use --rev <version> to override
+Found version
+{
+	"name": "4458",
+	"description": "Jenkins build 4458",
+	"refs": {
+		"BuildData": "686446e5669a9aab7d35179fd989032560f289fc",
+		"Bukkit": "a3d67ef041c520a1225a6ce4bd8d777ad23886b0",
+		"CraftBukkit": "fb3f2b6452a010c4511c59cdee78ae5803cc0b7a",
+		"Spigot": "73860e064edc2599604dd46c0bc5202283e57e9c"
+	},
+	"hashes": {
+		"CraftBukkit": "ebb8c5ebe1004f8a6ae7d431339bc91f2cc6f797ea51abe5bb5bfcdbf9669d4d",
+		"Spigot": "0c28e9c54e4cea11d2ae49afa951b4855652aecd87c13d683465e5f16eebb767"
+	},
+	"toolsVersion": 181,
+	"javaVersions": [65, 68]
+}
+
+*** The version you have requested to build requires Java versions between [Java 21, Java 24], but you are using Java 26
+*** Please rerun BuildTools using an appropriate Java version. For obvious reasons outdated MC versions do not support Java versions that did not exist at their release.

@@ -1,120 +1,53 @@
 package com.sentinelai.anticheat;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.sentinelai.anticheat.managers.APIManager;
-import com.sentinelai.anticheat.managers.ClipManager;
-import com.sentinelai.anticheat.managers.DetectionManager;
-import com.sentinelai.anticheat.managers.PlayerDataManager;
-import com.sentinelai.anticheat.data.ConfigManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Level;
+public class SentinelAI extends JavaPlugin implements Listener {
 
-public class SentinelAI extends JavaPlugin {
-
-    private static SentinelAI instance;
-    private Gson gson;
     private ConfigManager configManager;
-    private PlayerDataManager playerDataManager;
-    private DetectionManager detectionManager;
-    private ClipManager clipManager;
-    private APIManager apiManager;
-    private boolean aiEnabled;
 
     @Override
     public void onEnable() {
-        instance = this;
-        gson = new GsonBuilder().setPrettyPrinting().create();
-
         saveDefaultConfig();
         configManager = new ConfigManager(this);
         configManager.load();
 
-        playerDataManager = new PlayerDataManager(this);
-        detectionManager = new DetectionManager(this);
-        clipManager = new ClipManager(this);
-        apiManager = new APIManager(this);
+        Bukkit.getPluginManager().registerEvents(this, this);
 
-        registerEvents();
-        registerCommands();
-
-        logStartup();
-    }
-
-    @Override
-    public void onDisable() {
-        playerDataManager.saveAllData();
-        clipManager.cleanup();
-        getLogger().info("SentinelAI AntiCheat disabled!");
-    }
-
-    private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(playerDataManager, this);
-        Bukkit.getPluginManager().registerEvents(detectionManager, this);
-    }
-
-    private void registerCommands() {
-        getCommand("sentinel").setExecutor(new SentinelCommand(this));
-    }
-
-    private void logStartup() {
         getLogger().info("========== SentinelAI AntiCheat ==========");
-        getLogger().info("Version: " + getDescription().getVersion());
-        getLogger().info("AI System: " + (aiEnabled ? "ENABLED" : "DISABLED"));
-        getLogger().info("API Endpoint: " + configManager.getApiUrl());
+        getLogger().info("Version: 1.0.0");
+        getLogger().info("Status: ENABLED");
         getLogger().info("==========================================");
     }
 
-    public void sendFlag(String playerName, String reason, int vl, String clipData) {
-        getLogger().warning("FLAG: " + playerName + " | " + reason + " | VL: " + vl);
-        if (configManager.isApiEnabled()) {
-            apiManager.sendFlag(playerName, reason, vl, clipData);
-        }
-        if (configManager.isDiscordEnabled()) {
-            apiManager.sendDiscordAlert(playerName, reason, vl);
-        }
-    }
-
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("sentinelai.admin")) {
-            sender.sendMessage("§cNo permission!");
-            return true;
-        }
-        if (args.length == 0) {
-            sendHelp(sender);
-            return true;
-        }
-        switch (args[0].toLowerCase()) {
-            case "reload":
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("sentinel")) {
+            if (args.length == 0) {
+                sender.sendMessage("§6SentinelAI AntiCheat v1.0.0");
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("reload")) {
+                reloadConfig();
                 configManager.load();
-                sender.sendMessage("§aConfig reloaded!");
-                break;
-            case "status":
-                sender.sendMessage("§6AI: " + (aiEnabled ? "§aENABLED" : "§cDISABLED"));
-                sender.sendMessage("§6API: " + (configManager.isApiEnabled() ? "§aENABLED" : "§cDISABLED"));
-                break;
-            default:
-                sendHelp(sender);
+                sender.sendMessage("§aConfiguration reloaded!");
+                return true;
+            }
         }
         return true;
     }
 
-    private void sendHelp(CommandSender sender) {
-        sender.sendMessage("§6/sentinel reload - Reload config");
-        sender.sendMessage("§6/sentinel status - Show status");
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        p.sendMessage("§aSentinelAI AntiCheat is monitoring you!");
+        getLogger().info("Player " + p.getName() + " is being monitored");
     }
-
-    public static SentinelAI getInstance() { return instance; }
-    public Gson getGson() { return gson; }
-    public ConfigManager getConfigManager() { return configManager; }
-    public PlayerDataManager getPlayerDataManager() { return playerDataManager; }
-    public DetectionManager getDetectionManager() { return detectionManager; }
-    public ClipManager getClipManager() { return clipManager; }
-    public APIManager getApiManager() { return apiManager; }
-    public boolean isAiEnabled() { return aiEnabled; }
 }

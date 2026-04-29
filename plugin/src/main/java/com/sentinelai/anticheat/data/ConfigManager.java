@@ -16,10 +16,11 @@ public class ConfigManager {
         this.plugin = plugin;
     }
 
-    public void load(String apiUrl, String apiKey) {
+    public void load() {
+        plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
-        this.apiUrl = config.getString("api.url", apiUrl);
-        this.apiKey = config.getString("api.key", apiKey);
+        this.apiUrl = config.getString("api.url", "http://localhost:8000");
+        this.apiKey = config.getString("api.key", "sentinel-default-key");
         this.apiEnabled = config.getBoolean("api.enabled", true);
         this.discordEnabled = config.getBoolean("discord.enabled", false);
         this.discordWebhook = config.getString("discord.webhook", "");
